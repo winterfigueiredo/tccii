@@ -16,7 +16,8 @@ class Pesquisador(models.Model):
 
     class Meta:
         ordering = ['nome_pesq']
-
+        
+       
     def __str__(self):
         return self.nome_pesq
 
@@ -27,7 +28,7 @@ class Pesquisa(models.Model):
     data_inicio = models.DateField(default=datetime.datetime.now)
     duracao = models.IntegerField(default=10)
     num_pesquisadores = models.IntegerField()
-    orcamento = models.FloatField()
+    orcamento = models.DecimalField(max_digits=10, decimal_places=2)
     etapa = models.CharField(max_length=4, choices=ETAPA)
 
    
@@ -38,7 +39,14 @@ class Pesquisa(models.Model):
     def prazofinal(self):
         # Calcula a data de prazo final somando a duração em meses à data de início
         return self.data_inicio + relativedelta(months=self.duracao)
-
+    @property
+    def data_formatada(self): 
+        return self.data_inicio.strftime('%d/%m/%Y')
+    
+    @property
+    def data_input(self): 
+        return self.data_inicio.strftime('%YYYY/%MM/%DD')
+    
     @property
     def diasfaltantes(self):
         # Calcula quantos dias faltam até o prazo final

@@ -1,0 +1,85 @@
+{% load static %}
+<!doctype html>
+<html lang="pt-br">
+    <head>
+      {% block head %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+      <!-- Importação do CDN Bootstrap -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        <link href={% static "/styles/styles.css" %} rel="stylesheet" >
+
+       
+        <!-- Importação do CDN JavaScript do Bootstrap -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+        <!-- Importação dos ícones do Bootstrap -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"></script>
+        <title>{% block title %}{% endblock %}</title>
+        {% endblock %}
+    </head>
+     <body>
+          
+      <div class="d-flex m5 bg-light-subtle bodywinter"  >
+        <div class="navwinter">
+         <div class="d-flex  flex-column flex-shrink-0 p-3" style="position: fixed; height: 100vh;">
+          <div>
+             <img src="/static/logo.png" alt="" width="55" height="30" class="d-inline-block align-text-top">
+             <span>Olá, {{user.username}}</span>
+             
+          </div>
+          <div>
+            <span>{{user.last_name}}</span>
+            
+          </div>
+          <span>{{ data_atual }}</span>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto" >
+          <li class="nav-item">
+            <a href="{% url 'home' %}" class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" aria-current="page">
+              Home
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'pesquisadores' %}" class="nav-link link-body-emphasis {% if request.resolver_match.url_name == 'pesquisadores' %}active{% endif %}">
+              Pesquisadores
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'pesquisas' %}" class="nav-link link-body-emphasis {% if request.resolver_match.url_name == 'pesquisas' %}active{% endif %}">
+              Pesquisas
+            </a>
+          </li>          
+        </ul>
+        <hr>
+        <div>
+          <a href="{% url 'logout' %}" class="d-flex align-items-center link-body-emphasis text-decoration-none" >
+            <span>Sair</span>
+          </a>
+        </div>
+      </div>
+      </div>
+      
+        <div id="content" class="col-10 h-100 bg-dark-subtle">
+          <div  style="margin-top: 5vh; padding-left: 2vh; ">
+            {% block content %} 
+          </div>
+           
+          {% endblock %}</div>
+
+      </div>
+    {% block script %}
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+      <script src="script.js"></script>
+    {% endblock %}
+</body>
+<!-- <footer>
+         <div id="footer">
+        {% block footer %}
+        &copy; Copyright 2024 by <a>Winter Figueiredo</a>.
+        {% endblock %}
+      </div>
+      </footer> -->
+</html>

@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+{% block title %}Editar pesquisador {% endblock %}
+
+{%block content %}
+<div class="col">
+    <div class="col-4 text-center">
+      <h2> Editar Pesquisa {{pesquisador.nome_pesq}} </h2>
+    </div>
+    <div class="container-fluid col-md-6 p-lg-2 p-md-4">
+      <div class="modal-body">
+        <form  method="post" action="{% url 'atualizar_pesquisa' pesquisa.id %}">
+          {% csrf_token %}
+          <div class="form-floating">
+            <input type="text" class="form-control"  name="titulo" placeholder="titulo" value="{{pesquisa.titulo}}">
+            <label for="floatingInput">Título</label>
+          </div>
+          <br>
+          <div style="display: flex;">
+            <label for="pesquisadores">Pesquisadores</label>
+            <select id="pesquisadores" name="pesquisadores" multiple style="padding-left: 10px;" >
+                  {% for pesquisador in pesquisadores %}
+                      <option value="{{ pesquisador.id }}">{{ pesquisador.nome_pesq }}</option>
+                  {% endfor %}
+            </select>
+          </div>
+          <br>
+          <div class="form-floating">
+          <input type="date" class="form-control" id = "datainicio" name="datainicio" placeholder="{{ pesquisa.data_inicio|date:'Y-m-d' }}">
+            <label for="floatingInput">Data de início</label>
+          </div>
+          <br>
+          <div style="display: flex; margin-bottom: 10px;" class="col" >
+            <div class="form-floating col-6">
+            <input type="number" class="form-control"  name="duracao" placeholder="Duração" value={{pesquisa.duracao}}>
+            <label for="floatingInput">Duração em meses</label>
+          </div>
+          <br>
+          <div class="form-floating col-6">
+            <input type="float" class="form-control"  name="orcamento" placeholder="Orçamento" value="{{pesquisa.orcamento}}">
+            <label for="floatingInput">Orçamento</label>
+          </div>
+          <br>
+          </div>
+          
+          <div class="input-group mb-3">
+            <select class="form-select" id="inputGroupSelect02"  name = "etapa" placeholder="Selecione">
+              <option selected>{{pesquisa.etapa}}</option>
+              <option value="Planejamento">Planejamento</option>
+              <option value="Elaboração">Elaboração</option>
+              <option value="Execução">Execução</option>
+              <option value="Finalizado">Finalizado</option>
+            </select>
+          </div> 
+          <div class="modal-footer">
+            <a href="{% url 'pesquisadores' %}"><button type="button" class="btn-secondary">Cancelar</button></a>
+            <button type="submit" class="btn-primary">Salvar</button>
+        </div>
+        </form> 
+        </div>
+      </div>
+  </div>
+
+ 
+{%endblock%}
+
+{% block script %}
+<script>
+  // Definindo a data padrão como 27 de junho de 2024
+  document.getElementById('datainicio').value ="{{ pesquisa.data_inicio|date:'Y-m-d' }}";
+</script>
+
+{%endblock%}

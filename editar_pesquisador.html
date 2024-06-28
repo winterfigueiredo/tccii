@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Editar pesquisador {% endblock %}
+
+{%block content %}
+<div class="d-flex col">
+    <div class="col-4">
+      <h2> Editar Pesquisador {{pesquisador.nome_pesq}} </h2>
+    </div>
+  <div class="container-fluid">
+    <div class=" p-lg-2 p-md-4 container-fluid">
+          <form  method="post" action="{% url 'atualizar_pesquisador' pesquisador.id %}">
+            {% csrf_token %}
+            <div class="form-floating">
+              <input type="text" class="form-control"  name="nomePesq" placeholder="Nome" value="{{pesquisador.nome_pesq}}">
+              <label for="floatingInput">Nome</label>
+            </div>
+            <br>
+            <div class="form-floating">
+              <input type="email" class="form-control"  name="emailPesq" placeholder="Email" value="{{pesquisador.email}}">
+              <label for="floatingInput">E-mail</label>
+            </div>
+          <br>
+                  
+        </div>
+        <div class="modal-footer">
+            <a href="{% url 'pesquisadores' %}"><button type="button" class="btn-secondary">Cancelar</button></a>
+            <button type="submit" class="btn-primary">Salvar</button>
+        </div>
+        </form> 
+        </div>
+      </div>
+  </div>
+  </div>
+
+  
+{%endblock%}
