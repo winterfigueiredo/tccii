@@ -30,13 +30,16 @@ urlpatterns = [
     path('caduser/',views.caduser, name="caduser"),
     path('loguser/',views.loguser, name="loguser"),
     path('logout/',views.logout_view, name="logout"),
-    path('roadmap/',views.roadmap, name="roadmap"),
     path('pesquisadores/', views.pesquisadores, name='pesquisadores'),
     path('salvar_pesquisador/', views.salvar_pesquisador, name="salvar_pesquisador"),
-    path('editar_pesquisador/', views.editar_pesquisador, name="editar_pesquisador"),
+    path('editar_pesquisador/<int:id>', views.editar_pesquisador, name="editar_pesquisador"),
+    path('atualizar_pesquisador/<int:id>', views.atualizar_pesquisador, name="atualizar_pesquisador"),
     path('deletar_pesquisador/<int:id>', views.deletar_pesquisador, name="deletar_pesquisador"),
+    path('deletar_pesquisa/<int:id>', views.deletar_pesquisa, name="deletar_pesquisa"),
     path('pesquisas/', views.pesquisas, name="pesquisas"),
     path('salvar_pesquisa/', views.salvar_pesquisa, name="salvar_pesquisa"),
+    path('editar_pesquisa/<int:id>', views.editar_pesquisa, name="editar_pesquisa"),
+    path('atualizar_pesquisa/<int:id>', views.atualizar_pesquisa, name="atualizar_pesquisa"),
     path('erro/', views.erro, name="erro"),
 
 ]

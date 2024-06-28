@@ -1,0 +1,174 @@
+
+{% extends 'base.html' %}
+
+
+{% block content %}
+<section id="Dashboard">
+  <div>
+    <h2>Sua StartUp em números</h2>
+  </div>
+  <div class="d-flex  justify-content-around" >
+      <div>
+        <a href="{% url 'pesquisadores' %}" style="text-decoration: none; color: black;">
+        <div class="box card cardwinterdash">
+          {% if npesquisadores == 0 %}
+            <div>
+              <strong>Sem pesquisadores cadastrados</strong>
+            </div>
+            {% elif npesquisadores == 1 %}
+            <div>
+              <span class="title" style="font-size: 2rem;">{{pesquisadores.count}}</span>
+              <strong>Pesquisador</strong>
+            </div>
+            {% else %}
+            <div>
+              <span class="title" style="font-size: 2rem;">{{pesquisadores.count}}</span>
+              <strong>Pesquisadores</strong>
+            </div>
+            {% endif %}
+        </div>
+        </a>
+      </div>
+      <div class="box card text-center cardwinterdash">
+          <a href="{% url 'pesquisas' %}" style="text-decoration: none; color: black;">
+          <div>
+            
+            {% if npesquisas == 0 %}
+            <div>
+              <strong>Sem pesquisas cadastradas</strong>
+            </div>
+            {% elif npesquisas == 1 %}
+            <div>
+              <span class="title" style="font-size: 2rem;">{{npesquisas}}</span>
+              <strong>Pesquisa</strong>
+            </div>
+            {% else %}
+            <div>
+              <span class="title" style="font-size: 2rem;">{{npesquisas}}</span>
+              <strong>Pesquisas </strong>
+            </div>
+            {% endif %}
+          </div>
+          </a>
+        </div>
+      <div class="cardwinterdash box card">
+          <a  style="text-decoration: none; color: black;">
+          <div class="box">
+            {% if somacusto == NaN %}
+              <span class="title"  style="font-size: 2rem"></span>
+              <strong>Você ainda não investiu em pesquisas.</strong>
+            {% else %}
+            <div>
+              <span class="title" id =numero-formatado style="font-size: 2rem;" data-numero="{{ somacusto }}"></span>
+            </div>
+            <div>
+              <strong>R$ investidos</strong>
+            </div>              
+            {% endif %}
+            <div>
+            </div>
+          </div>
+          </a>
+        </div>
+  </div>
+  <br><br>
+</section>
+
+
+    <h2>Dashboard de monitoramento das pesquisas</h2>
+    <hr>
+    <div>
+      <div class="row container">
+        <div class="col">
+            <div class="titlewinter" style="font-size: 30px;">Planejamento</div>
+            <div class="itemwinter">
+              {% for pesquisa in pesqplanejamento %}
+              <a href="{% url 'editar_pesquisa' pesquisa.id %}" style="text-decoration: none; color: black;">
+              <div class="cardwinter">
+                  <h6>{{pesquisa.titulo}}</h6>
+                  <span>{{pesquisa.diasfaltantes}} dias faltantes</span>
+                </div>
+              </a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col">
+            <div class="titlewinter" style="font-size: 30px;">Elaboração</div>
+            <div class="itemwinter">
+              {% for pesquisa in pesqelaboracao %}
+              <a href="{% url 'editar_pesquisa' pesquisa.id %}" style="text-decoration: none; color: black;">
+              <div class="cardwinter">
+                  <h6>{{pesquisa.titulo}}</h6>
+                  <span>{{pesquisa.diasfaltantes}} dias faltantes</span>
+                </div>
+              </a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col">
+            <div class="titlewinter" style="font-size: 30px;">Execução</div>
+            <div class="itemwinter">
+              {% for pesquisa in pesqexecucao %}
+              <a href="{% url 'editar_pesquisa' pesquisa.id %}" style="text-decoration: none; color: black;">
+              <div class="cardwinter">
+                  <h6>{{pesquisa.titulo}}</h6>
+                  <span>{{pesquisa.diasfaltantes}} dias faltantes</span>
+                </div>
+              </a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col">
+            <div class="titlewinter" style="font-size: 30px;">Comunicação</div>
+            <div class="itemwinter">
+              {% for pesquisa in pesqcomunicacao %}
+              <a href="{% url 'editar_pesquisa' pesquisa.id %}" style="text-decoration: none; color: black;">
+              <div class="cardwinter">
+                  <h6>{{pesquisa.titulo}}</h6>
+                  <span>{{pesquisa.diasfaltantes}} dias faltantes</span>
+                </div>
+              </a>
+                {% endfor %}
+            </div>
+        </div>
+
+
+
+
+      </div>
+
+
+
+
+
+
+    </div>
+
+               
+      
+
+   
+
+{%endblock%}
+
+{% block script %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script>
+  
+  document.addEventListener('DOMContentLoaded', (event) => {
+    
+    const numeroSpan = document.getElementById('numero-formatado');
+    // Exemplo de número
+    const numero = parseFloat(numeroSpan.getAttribute('data-numero'));
+      numeroSpan.textContent = "0.00";
+    // Formata o número com separador decimal como ponto
+      const numeroFormatado = numero.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        // Define o valor formatado na span
+       numeroSpan.textContent = numeroFormatado;
+    }
+); 
+</script>
+
+
+{% endblock %}

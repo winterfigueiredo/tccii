@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% block title %}Pesquisas{% endblock %}
+
+
+
+
+{% block content %}
+<div class="d-flex col">
+  <div class="col-4">
+    <h2>Pesquisas</h2>
+  </div>
+  <div class="col-2">
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Nova Pesquisa</button>
+  </div>
+</div>
+<div class="col-4"> 
+    <!-- Button trigger modal -->
+    <!-- Modal -->
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Nova Pesquisa</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form  method="post" action="{% url 'salvar_pesquisa' %}">
+            {% csrf_token %}
+            <div class="form-floating">
+              <input type="text" class="form-control"  name="titulo" placeholder="titulo" required>
+              <label for="floatingInput">Título</label>
+            </div>
+            <br>
+            <div>
+              <div>
+                <label class="form-floating" for="form-floating">Pesquisadores</label>
+              </div>
+              <div>
+                <select class="form-select selectwinter" style="width: 350px;" id="pesquisadores" name="pesquisadores"  multiple size="10" multiple required>
+                {% for pesquisador in pesquisadores %}
+                <option value="{{pesquisador.id}}">{{ pesquisador.nome_pesq }}</option>
+                {% endfor %}
+                </select>
+              </div>
+              <br>
+            </div>
+            <div class="form-floating">
+              <input type="date" class="form-control"  name="datainicio" placeholder="DD/MM/YYYY" required>
+              <label for="floatingInput">Data de início</label>
+            </div>
+            <br>
+            <div class="form-floating">
+              <input type="number" class="form-control"  min = 1 name="duracao" placeholder="Duração"   required>
+              <label for="floatingInput">Duração em meses</label>
+            </div>
+            <br>
+            <div class="form-floating">
+              <input type="float" class="form-control"  min= 0 name="orcamento" placeholder="Orçamento" >
+              <label for="floatingInput">Orçamento (R$)</label>
+            </div>
+            <br>
+            <div class="input-group mb-3">
+              <select class="form-select" id="inputGroupSelect02"  name = "etapa" placeholder="Selecione">
+                <option selected>Selecione a etapa da pesquisa</option>
+                <option value="Planejamento">Planejamento</option>
+                <option value="Elaboração">Elaboração</option>
+                <option value="Execução">Execução</option>
+                <option value="Finalizado">Finalizado</option>
+              </select>
+            </div> 
+            
+            <br>
+            <!-- <button class="btn btn-primary w-100 py-2" type="submit">Salvar Pesquisador</button> -->
+         
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+       </form>
+      </div>
+    </div>
+  </div>
+
+<br><br>
+
+<div
+    class="table-borderless">
+    <table
+        class="table"
+    >
+        <thead class="table">
+            
+           
+            <tr>
+                <th>Título</th>
+                <th>Início</th>
+                <th>Prazo(dias)</th>
+                <th>Pesquisador(es)</th>
+                <th>Orçamento</th>
+                <th>Etapa</th>
+                <th>Ações</th>
+            
+            </tr>
+        </thead>
+        <tbody class="table .table-borderless">
+           
+            {% for pesquisa in pesquisas %}
+              <tr class="table">            
+                <td scope="row">{{pesquisa.titulo}}</td>
+                <td>{{pesquisa.data_formatada}}</td>
+                <td>{{pesquisa.diasfaltantes}}</td>
+                <td>{{pesquisa.num_pesquisadores}}</td>
+                <td>R$ {{pesquisa.orcamento}}</td>
+                <td>{{pesquisa.etapa}}</td>
+                <td>
+                  <div>
+                    <a href="{% url 'editar_pesquisa' pesquisa.id %}" ><i class="bi bi-pencil-square"></i></a>
+                    <a href="{% url 'deletar_pesquisa' pesquisa.id %}" ><i class="bi bi-trash3"></i></a>
+                  </div>
+                </td>
+            </tr>
+            </a>
+            {% endfor %}
+               
+    </table>
+</div>
+
+</html>
+
+
+{%endblock%}
+{% block script %}
+  <script>
+    function updateSelectedCount() {
+        var select = document.getElementById('pesquisadores');
+        var selectedOptions = select.selectedOptions;
+        var count = selectedOptions.length;
+        document.getElementById('selected-count').innerText = 'Pesquisadores selecionados: ' + count;
+    }
+
+    // Inicializa a contagem ao carregar a página
+    window.onload = updateSelectedCount;
+  </script>
+{%endblock%}

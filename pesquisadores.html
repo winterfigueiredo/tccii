@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}Pesquisadores {% endblock %}
+
+{%block content %}
+
+<div class="d-flex col">
+  <div class="col-4">
+    <h2> Pesquisadores </h2>
+  </div>
+  <div class="col-2">
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Novo(a) Pesquisador(a)</button>
+  </div>
+</div>
+
+
+<div class="modal fade accordion " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Cadastrar pesquisador</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form  method="post" action="{% url 'salvar_pesquisador' %}">
+            {% csrf_token %}
+            <div class="form-floating">
+              <input type="text" class="form-control"  name="nomePesq" placeholder="Nome" required>
+              <label for="floatingInput">Nome</label>
+            </div>
+            <br>
+            <div class="form-floating">
+              <input type="email" class="form-control"  name="emailPesq" placeholder="E-mail" required>
+              <label for="floatingInput">E-mail</label>
+            </div>
+          <br>
+                  
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+        </form> 
+        </div>
+      </div>
+</div>
+
+
+
+
+<br><br>
+
+
+<div
+    class="table-responsive">
+    <table
+        class="table table-hover"
+    >
+        <thead class="table">
+            
+           
+            <tr>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody >
+           
+            {% for pesquisador in pesquisadores %}
+            <tr >
+                <td scope="row">{{pesquisador.nome_pesq}}</td>
+                <td>{{pesquisador.email}}</td>
+                <td>
+                  <div>
+                    <a href="{% url 'editar_pesquisador' pesquisador.id %}"><i class="bi bi-pencil-square"></i></a>
+                    <a href="{% url 'deletar_pesquisador' pesquisador.id %}" ><i class="bi bi-trash3"></i></a>
+                  </div>
+                </td>
+            </tr>
+            {% endfor %}
+            <tr>
+               
+        </table>
+</div>
+
+
+{%endblock%}
